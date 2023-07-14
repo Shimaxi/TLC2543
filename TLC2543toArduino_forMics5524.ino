@@ -13,7 +13,7 @@
    13-SCK       18-I/O CLOCK 
    12-MISO      16-DATA OUT
    11-MOSI      17-DATA INPUT
-   10-CS        15-CS
+   9-CS        15-CS
  
    VCC          14-REF+
    GND          13-REF-
@@ -50,7 +50,7 @@ void readAdcAll() {
   uint16_t value = 0;
 
   readAdc(0); //readAdc(1)をして得る値がAIN0の物になるように調整
-  for(uint8_t channel = 1; channel < 11; channel++)
+  for(uint8_t channel = 1; channel < 12; channel++)
   {
     values[channel - 1] = readAdc(channel); //SPI通信の都合上valuesに入る値とreadAdcで読む値が一つズレる
   }

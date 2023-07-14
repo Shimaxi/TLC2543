@@ -29,21 +29,33 @@ float Vref = 5.0; //参照電圧は5V
 float floatvalues[11] = { 0 }; //今回はArduino側で電圧までの変換を行う
 SPISettings MySetting (1000000, MSBFIRST, SPI_MODE0); //iso-SPIの最大クロック周波数が1MHz
 
+unsigned long starttime = 0;
+unsigned long previoustime = 0;
+unsigned long currenttime = 0;
+
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200); //大きいほど高速通信 ※注シリアルモニタの表示も一緒に変えるように
   SPI.begin();
   pinMode(chipSelectPin, OUTPUT);
+  starttime = millis();
 }
 
 void loop() {
-  readAdcAll(); 
-  for(uint8_t channel = 0; channel < 11; channel++)
-  {    
-    floatvalues[channel] = values[channel]*Vref/4095; //12bit表記を実数に変換
-    Serial.print(String(floatvalues[channel],2) + ","); //string(values,n)で小数点以下どこまで書くか決められる
-  }  
-  Serial.print("\n");
+  currenttime = millis()-starttime;
+  if (currenttime-previoustime >= 20){
+    previoustime = currenttime;
+    readAdcAll(); 
+    Serial.print(currenttime);
+    Serial.print(",");
+    for(uint8_t channel = 0; channel < 12; channel++)
+    {    
+      floatvalues[channel] = values[channel]*Vref/4095; //12bit表記を実数に変換
+      Serial.print(String(floatvalues[channel],2) + ","); //string(values,n)で小数点以下どこまで書くか決められる
+    }  
+    Serial.print("\n");    
+  }
 }
 
 void readAdcAll() {
