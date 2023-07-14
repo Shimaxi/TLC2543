@@ -75,7 +75,7 @@ uint16_t readAdc(uint8_t chx) {
   SPI.beginTransaction(MySetting);
   digitalWrite(chipSelectPin, LOW);
   delayMicroseconds(10);
-  ad = SPI.transfer((chx << 4) | 0x0E); // チャネル番号に対応した2進数コードを0を4つ分左にシフト，そして空いてる4つの0に0x0C = 16-Bit, LSB-First, Unipolarを入れる
+  ad = SPI.transfer((chx << 4) | 0x0E); // チャネル番号に対応した2進数コードを0を4つ分左にシフト，そして空いてる4つの0に0x0E = 16-Bit, LSB-First, Unipolarを入れる
   ad_l = SPI.transfer(0); //
   digitalWrite(chipSelectPin, HIGH);
   SPI.endTransaction();

@@ -13,7 +13,7 @@
    13-SCK       18-I/O CLOCK 
    12-MISO      16-DATA OUT
    11-MOSI      17-DATA INPUT
-   9-CS        15-CS
+   10-CS        15-CS
  
    VCC          14-REF+
    GND          13-REF-
